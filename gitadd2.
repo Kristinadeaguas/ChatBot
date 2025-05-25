@@ -1,0 +1,49 @@
+# Historia de Usuario #5: Ayuda y Comandos
+# (Incluye TODAS las historias anteriores + nueva funcionalidad)
+
+import re
+import random
+
+class ChatBot:
+    def __init__(self):
+        self.user_name = None
+        self.conversation_active = True
+        
+        # Patrones de saludo (Historia 1)
+        self.greeting_patterns = [
+            r'\b(hola|hi|hello|buenos días|buenas tardes|buenas noches|hey)\b',
+            r'\b(saludos|qué tal|como estas|cómo estás)\b'
+        ]
+        
+        # Base de conocimiento FAQ (Historia 2)
+        self.faq_database = {
+            'horarios': {
+                'patterns': [r'\b(horario|hora|cuando|abierto|cerrado|atiende)\b'],
+                'response': "Nuestros horarios de atención son de lunes a viernes de 9:00 AM a 6:00 PM, y sábados de 9:00 AM a 2:00 PM."
+            },
+            'servicios': {
+                'patterns': [r'\b(servicio|que hacen|ofrecen|productos)\b'],
+                'response': "Ofrecemos servicios de consultoría, desarrollo de software, soporte técnico y capacitación tecnológica."
+            },
+            'contacto': {
+                'patterns': [r'\b(contacto|teléfono|email|dirección|ubicación)\b'],
+                'response': "Puedes contactarnos al teléfono (555) 123-4567 o por email: info@empresa.com. Estamos ubicados en Av. Principal #123."
+            },
+            'precios': {
+                'patterns': [r'\b(precio|costo|cuanto|tarifa|presupuesto)\b'],
+                'response': "Los precios varían según el servicio. Te recomiendo contactar a nuestro equipo de ventas para un presupuesto personalizado."
+            }
+        }
+        
+        # Patrones de despedida (Historia 3)
+        self.farewell_patterns = [
+            r'\b(adiós|adios|bye|hasta luego|nos vemos|gracias|thank you|chao)\b',
+            r'\b(me voy|tengo que irme|hasta la vista|hasta pronto)\b'
+        ]
+        
+        # Comandos disponibles (Historia 5 - NUEVO)
+        self.available_commands = {
+            '/help': 'Muestra esta lista de comandos disponibles',
+            '/horarios': 'Información sobre horarios de atención',
+            '/servicios': 'Lista de servicios disponibles',
+            '/contacto': 'Información
