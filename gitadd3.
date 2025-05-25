@@ -1,0 +1,69 @@
+# Historia de Usuario #1: Saludo Personalizado
+
+import re
+import random
+
+class ChatBot:
+    def __init__(self):
+        self.user_name = None
+        self.greeting_patterns = [
+            r'\b(hola|hi|hello|buenos días|buenas tardes|buenas noches|hey)\b',
+            r'\b(saludos|qué tal|como estas|cómo estás)\b'
+        ]
+    
+    def handle_greeting(self, message):
+        """Maneja los saludos del usuario"""
+        for pattern in self.greeting_patterns:
+            if re.search(pattern, message.lower()):
+                # Extraer nombre si se menciona
+                name_match = re.search(r'soy (\w+)|me llamo (\w+)|mi nombre es (\w+)', message.lower())
+                if name_match:
+                    self.user_name = name_match.group(1) or name_match.group(2) or name_match.group(3)
+                    self.user_name = self.user_name.capitalize()
+                
+                # Saludo personalizado
+                if self.user_name:
+                    greetings = [
+                        f"¡Hola {self.user_name}! ¿En qué puedo ayudarte hoy?",
+                        f"¡Buenos días {self.user_name}! Estoy aquí para asistirte.",
+                        f"¡Hola {self.user_name}! ¿Qué necesitas saber?"
+                    ]
+                else:
+                    greetings = [
+                        "¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte?",
+                        "¡Buenos días! ¿Cómo puedo asistirte hoy?",
+                        "¡Hola! Estoy aquí para ayudarte. ¿Qué necesitas?"
+                    ]
+                
+                return random.choice(greetings)
+        
+        # Respuesta por defecto
+        return "Hola, no estoy seguro de entender. ¿Podrías saludarme de otra manera?"
+    
+    def get_response(self, message):
+        """Función principal que procesa el mensaje"""
+        return self.handle_greeting(message)
+
+# Función principal para probar
+def main():
+    bot = ChatBot()
+    print("🤖 ChatBot - Historia 1: Saludo Personalizado")
+    print("Prueba saludar de diferentes maneras...")
+    print("="*50)
+    
+    while True:
+        try:
+            user_input = input("\n👤 Tú: ").strip()
+            if user_input.lower() in ['exit', 'salir', 'quit']:
+                print("🤖 Bot: ¡Hasta luego!")
+                break
+                
+            response = bot.get_response(user_input)
+            print(f"🤖 Bot: {response}")
+            
+        except KeyboardInterrupt:
+            print("\n🤖 Bot: ¡Hasta luego!")
+            break
+
+if __name__ == "__main__":
+    main()
